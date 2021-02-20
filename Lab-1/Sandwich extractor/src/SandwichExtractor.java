@@ -1,4 +1,28 @@
+import java.util.Arrays;
+
 public class SandwichExtractor {
+    private static int sizeOfSandwichWithoutOlives(String[] ingredients){
+        int size = 0;
+        for(String ingredient : ingredients){
+            if(!ingredient.equals("olives")){
+               ++size;
+            }
+        }
+        return size;
+    }
+
+    public static String[] removeOlives(String[] ingredients){
+        String[] removedOlives = new String[sizeOfSandwichWithoutOlives(ingredients)];
+        int i = 0;
+        for(String ingredient : ingredients){
+            if(!ingredient.equals("olives")){
+                removedOlives[i] = ingredient;
+                ++i;
+            }
+        }
+        return removedOlives;
+    }
+
     public static String[] extractIngredients(String sandwich) {
         int indexOfFirstBread;
         int indexOfLastBread;
@@ -17,6 +41,9 @@ public class SandwichExtractor {
             arrayOfIngredients = new String[1];
             arrayOfIngredients[0] = "";
         }
+
+        arrayOfIngredients = removeOlives(arrayOfIngredients);
+        Arrays.sort(arrayOfIngredients);
         return arrayOfIngredients;
     }
 
