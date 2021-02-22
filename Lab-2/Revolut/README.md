@@ -16,8 +16,7 @@
 ```java
 package bg.sofia.uni.fmi.mjt.revolut;
 
-public interface RevolutAPI {
-
+import bg.sofia.uni.fmi.mjt.revolut.account.Account;public interface RevolutAPI {
     /**
      * Executes a card payment using a POS terminal
      *
