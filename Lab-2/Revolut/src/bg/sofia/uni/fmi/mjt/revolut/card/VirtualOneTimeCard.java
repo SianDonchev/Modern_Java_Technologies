@@ -11,4 +11,9 @@ public class VirtualOneTimeCard extends BasicCard {
     public String getType() {
         return "VIRTUALONETIME";
     }
+
+    @Override
+    protected boolean enoughUncorrectPinsForBlock() {
+        return numberOfUncorrectPins == 1;
+    }
 }

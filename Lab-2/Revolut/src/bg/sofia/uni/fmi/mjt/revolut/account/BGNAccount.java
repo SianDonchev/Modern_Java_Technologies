@@ -7,6 +7,6 @@ public class BGNAccount extends Account {
 
     @Override
     public String getCurrency() {
-        return null;
+        return "BGN";
     }
 }

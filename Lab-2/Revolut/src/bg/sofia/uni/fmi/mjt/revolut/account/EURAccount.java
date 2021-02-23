@@ -7,6 +7,6 @@ public class EURAccount extends Account {
 
     @Override
     public String getCurrency() {
-        return null;
+        return "EUR";
     }
 }
