@@ -1,4 +1,14 @@
 package bg.sofia.uni.fmi.mjt.revolut.card;
 
-public class PhysicalCard {
+import java.time.LocalDate;
+
+public class PhysicalCard extends BasicCard {
+    PhysicalCard(String number, int pin, LocalDate expirationDate) {
+        super(number, pin, expirationDate);
+    }
+
+    @Override
+    public String getType() {
+        return "PHYSICAL";
+    }
 }

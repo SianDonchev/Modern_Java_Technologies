@@ -4,7 +4,13 @@ import bg.sofia.uni.fmi.mjt.revolut.account.Account;
 import bg.sofia.uni.fmi.mjt.revolut.card.Card;
 
 public class Revolut implements RevolutAPI {
-    Revolut(Account[] accounts, Card[] cards){}
+    private Account[] accounts;
+    private Card[] cards;
+
+    Revolut(Account[] accounts, Card[] cards){
+        this.accounts = accounts;
+        this.cards = cards;
+    }
 
     @Override
     public boolean pay(Card card, int pin, double amount, String currency) {
