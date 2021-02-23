@@ -13,7 +13,7 @@ public class Revolut implements RevolutAPI {
     public static final String BLOCKED_TOP_LEVEL_DOMAIN = "biz";
 
 
-    Revolut(Account[] accounts, Card[] cards) {
+    public Revolut(Account[] accounts, Card[] cards) {
         this.accounts = accounts;
         this.cards = cards;
     }
@@ -36,12 +36,15 @@ public class Revolut implements RevolutAPI {
     public boolean payOnline(Card card, int pin, double amount, String currency, String shopURL) {
         if (!isBlockedURL(shopURL) && isAccepted(card, pin, amount, currency)) {
             int indexForAccountToWithdraw = accountWithTheSufficientAmount(amount);
-            Account accountToWithdrawFrom = accounts[indexForAccountToWithdraw];
-            accountToWithdrawFrom.withdraw(amount);
-            if (card.getType().equals("VIRTUALONETIME")) {
-                card.block();
+
+            if (indexForAccountToWithdraw != -1) {
+                Account accountToWithdrawFrom = accounts[indexForAccountToWithdraw];
+                accountToWithdrawFrom.withdraw(amount);
+                if (card.getType().equals("VIRTUALONETIME")) {
+                    card.block();
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -76,10 +79,9 @@ public class Revolut implements RevolutAPI {
     public double getTotalAmount() {
         int totalAmount = 0;
         for (Account account : accounts) {
-            if(account.getCurrency().equals("BGN")) {
+            if (account.getCurrency().equals("BGN")) {
                 totalAmount += account.getAmount();
-            }
-            else{
+            } else {
                 totalAmount += account.getAmount() * EUR_TO_BGN_EXCHANGE_RATE;
             }
         }
@@ -88,7 +90,7 @@ public class Revolut implements RevolutAPI {
 
     private boolean isBlockedURL(String URL) {
         int indexOfBlockedDomain = URL.lastIndexOf(BLOCKED_TOP_LEVEL_DOMAIN);
-        if (indexOfBlockedDomain == URL.length() - 4) {
+        if (indexOfBlockedDomain == URL.length() - 3) {
             return true;
         }
         return false;
@@ -105,7 +107,7 @@ public class Revolut implements RevolutAPI {
 
     private int accountWithTheSufficientAmount(double amount) {
         for (int i = 0; i < accounts.length; ++i) {
-            if (accounts[i].getAmount() > amount) {
+            if (accounts[i].getAmount() >= amount) {
                 return i;
             }
         }

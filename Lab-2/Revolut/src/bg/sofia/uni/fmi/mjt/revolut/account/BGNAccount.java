@@ -5,6 +5,10 @@ public class BGNAccount extends Account {
         super(IBAN);
     }
 
+    public BGNAccount(String IBAN, double amount) {
+        super(IBAN, amount);
+    }
+
     @Override
     public String getCurrency() {
         return "BGN";
