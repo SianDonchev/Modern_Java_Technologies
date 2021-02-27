@@ -1,4 +1,7 @@
 package bg.sofia.uni.fmi.mjt.netflix.exceptions;
 
-public class ContentNotFoundException {
+public class ContentNotFoundException extends RuntimeException {
+    public ContentNotFoundException() {
+        super("Content is not found");
+    }
 }
