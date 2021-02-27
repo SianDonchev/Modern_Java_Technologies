@@ -17,4 +17,21 @@ public class Series extends StreamingContent {
         }
         return totalDuration;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(!(obj instanceof Series)){
+            return false;
+        }
+        Series otherSeries = (Series) obj;
+        return super.equals(otherSeries) && this.episodes.equals(otherSeries.episodes);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + episodes.hashCode();
+    }
 }

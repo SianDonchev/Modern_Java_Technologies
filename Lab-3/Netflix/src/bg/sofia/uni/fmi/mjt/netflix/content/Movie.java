@@ -14,4 +14,21 @@ public class Movie extends StreamingContent {
         return duration;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(!(obj instanceof Movie)){
+            return false;
+        }
+        Movie otherMovie = (Movie) obj;
+
+        return super.equals(otherMovie) && this.duration == otherMovie.duration;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + duration;
+    }
 }

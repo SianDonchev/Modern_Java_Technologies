@@ -24,4 +24,22 @@ public abstract class StreamingContent implements Streamable {
         return rating;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(!(obj instanceof StreamingContent)){
+            return false;
+        }
+        StreamingContent otherStreamingContent = (StreamingContent) obj;
+
+        return this.title.equals(otherStreamingContent.title) && this.genre.equals(otherStreamingContent.genre)
+                && this.rating.equals(otherStreamingContent.rating);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.rating.hashCode() + this.title.hashCode() + this.genre.hashCode();
+    }
 }

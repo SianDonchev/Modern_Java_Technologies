@@ -16,4 +16,22 @@ public class Episode {
     public String getName(){
         return name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(!(obj instanceof Episode)){
+            return false;
+        }
+
+        Episode otherEpisode = (Episode) obj;
+        return this.name.equals(otherEpisode.name) && this.duration == otherEpisode.duration;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + duration;
+    }
 }
