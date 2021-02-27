@@ -35,7 +35,7 @@ public class Netflix implements StreamingService {
         if(!isUserRegistered(user)){
             throw new UserNotFoundException();
         }
-        Streamable toWatch = getContent((videoContentName));
+        Streamable toWatch = findByName((videoContentName));
         if(toWatch == null){
             throw new ContentNotFoundException();
         }
@@ -46,6 +46,11 @@ public class Netflix implements StreamingService {
 
     @Override
     public Streamable findByName(String videoContentName) {
+        for(Streamable streamable : streamableContent){
+            if(streamable.getTitle().equals(videoContentName)){
+                return streamable;
+            }
+        }
         return null;
     }
 
@@ -66,15 +71,6 @@ public class Netflix implements StreamingService {
             }
         }
         return false;
-    }
-
-    private Streamable getContent(String videoContentName){
-        for(Streamable streamable : streamableContent){
-            if(streamable.getTitle().equals(videoContentName)){
-                return streamable;
-            }
-        }
-        return null;
     }
 
     public boolean canWatch(Streamable streamable,Account user) {
