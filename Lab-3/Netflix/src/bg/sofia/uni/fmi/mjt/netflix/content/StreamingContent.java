@@ -1,5 +1,6 @@
 package bg.sofia.uni.fmi.mjt.netflix.content;
 
+import bg.sofia.uni.fmi.mjt.netflix.account.Account;
 import bg.sofia.uni.fmi.mjt.netflix.content.enums.Genre;
 import bg.sofia.uni.fmi.mjt.netflix.content.enums.PgRating;
 
@@ -8,7 +9,7 @@ public abstract class StreamingContent implements Streamable {
     private PgRating rating;
     private Genre genre;
 
-    public StreamingContent(String name, Genre genre, PgRating rating){
+    public StreamingContent(String name, Genre genre, PgRating rating) {
         this.title = name;
         this.genre = genre;
         this.rating = rating;
@@ -26,10 +27,10 @@ public abstract class StreamingContent implements Streamable {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj){
+        if (this == obj) {
             return true;
         }
-        if(!(obj instanceof StreamingContent)){
+        if (!(obj instanceof StreamingContent)) {
             return false;
         }
         StreamingContent otherStreamingContent = (StreamingContent) obj;

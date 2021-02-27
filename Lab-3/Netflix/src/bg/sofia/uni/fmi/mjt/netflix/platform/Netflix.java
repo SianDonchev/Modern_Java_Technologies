@@ -2,7 +2,14 @@ package bg.sofia.uni.fmi.mjt.netflix.platform;
 
 import bg.sofia.uni.fmi.mjt.netflix.account.Account;
 import bg.sofia.uni.fmi.mjt.netflix.content.Streamable;
+import bg.sofia.uni.fmi.mjt.netflix.content.StreamingContent;
+import bg.sofia.uni.fmi.mjt.netflix.content.enums.PgRating;
+import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentNotFoundException;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentUnavailableException;
+import bg.sofia.uni.fmi.mjt.netflix.exceptions.UserNotFoundException;
+
+import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Netflix implements StreamingService {
     private Account[] accounts;
@@ -13,9 +20,28 @@ public class Netflix implements StreamingService {
         this.streamableContent = streamableContent;
     }
 
+
+    /**
+     * Simulates watching activity for the given user.
+     * @param user the user that will watch the video. The user must be registered in the platform in order to access its contents.
+     * @param videoContentName the exact name of the video content: movie or series
+     *                         If the content is of type Series, we assume that the user will watch all episodes in it.
+     * @throws ContentUnavailableException if the content is age restricted and the user is not yet permitted to access it.
+     * @throws UserNotFoundException if the user is not registered in the platform.
+     * @throws ContentNotFoundException if the content is not present in the platform.
+     */
     @Override
     public void watch(Account user, String videoContentName) throws ContentUnavailableException {
-
+        if(!isUserRegistered(user)){
+            throw new UserNotFoundException();
+        }
+        Streamable toWatch = getContent((videoContentName));
+        if(toWatch == null){
+            throw new ContentNotFoundException();
+        }
+        if(!canWatch(toWatch,user)){
+            throw new ContentUnavailableException();
+        }
     }
 
     @Override
@@ -40,5 +66,24 @@ public class Netflix implements StreamingService {
             }
         }
         return false;
+    }
+
+    private Streamable getContent(String videoContentName){
+        for(Streamable streamable : streamableContent){
+            if(streamable.getTitle().equals(videoContentName)){
+                return streamable;
+            }
+        }
+        return null;
+    }
+
+    public boolean canWatch(Streamable streamable,Account user) {
+        if (streamable.getRating().equals(PgRating.NC17) && user.getYears() < 18) {
+            return false;
+        }
+        if (streamable.getRating().equals(PgRating.PG13) && user.getYears() < 14) {
+            return false;
+        }
+        return true;
     }
 }

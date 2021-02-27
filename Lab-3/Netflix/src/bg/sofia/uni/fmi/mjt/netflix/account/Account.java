@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.netflix.account;
 
 import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Account {
     private String username;
@@ -26,5 +27,9 @@ public class Account {
     @Override
     public int hashCode() {
         return this.username.hashCode() + this.bitrhdayDate.hashCode();
+    }
+
+    public long getYears() {
+        return java.time.temporal.ChronoUnit.YEARS.between(this.bitrhdayDate, LocalDateTime.now());
     }
 }
