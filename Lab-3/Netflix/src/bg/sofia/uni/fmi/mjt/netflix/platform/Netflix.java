@@ -49,6 +49,7 @@ public class Netflix implements StreamingService {
         for (PairStreamableViews pairStreamableViews : streamableContentAndViews) {
             if (mostViews < pairStreamableViews.getViews()) {
                 mostViewdContent = pairStreamableViews.getStreamable();
+                mostViews = pairStreamableViews.getViews();
             }
         }
         return mostViewdContent;
