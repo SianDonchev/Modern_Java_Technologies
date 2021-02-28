@@ -8,7 +8,6 @@ import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentNotFoundException;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentUnavailableException;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.UserNotFoundException;
 
-
 public class Netflix implements StreamingService {
     private Account[] accounts;
     private PairStreamableViews[] streamableContentAndViews;
@@ -47,8 +46,8 @@ public class Netflix implements StreamingService {
     public Streamable mostViewed() {
         Streamable mostViewdContent = null;
         int mostViews = 0;
-        for(PairStreamableViews pairStreamableViews : streamableContentAndViews){
-            if(mostViews < pairStreamableViews.getViews()){
+        for (PairStreamableViews pairStreamableViews : streamableContentAndViews) {
+            if (mostViews < pairStreamableViews.getViews()) {
                 mostViewdContent = pairStreamableViews.getStreamable();
             }
         }
@@ -66,8 +65,18 @@ public class Netflix implements StreamingService {
         return totalWatchedTime;
     }
 
+    public boolean canWatch(Streamable streamable, Account user) {
+        if (streamable.getRating().equals(PgRating.NC17) && user.getYears() < 18) {
+            return false;
+        }
+        if (streamable.getRating().equals(PgRating.PG13) && user.getYears() < 14) {
+            return false;
+        }
+        return true;
+    }
+
     private void initStreamableContentAndViews(Streamable[] streamableContent) {
-        int length = streamableContentAndViews.length;
+        int length = streamableContent.length;
         streamableContentAndViews = new PairStreamableViews[length];
         for (int i = 0; i < length; ++i) {
             streamableContentAndViews[i] = new PairStreamableViews(streamableContent[i]);
@@ -89,15 +98,5 @@ public class Netflix implements StreamingService {
             }
         }
         return false;
-    }
-
-    public boolean canWatch(Streamable streamable, Account user) {
-        if (streamable.getRating().equals(PgRating.NC17) && user.getYears() < 18) {
-            return false;
-        }
-        if (streamable.getRating().equals(PgRating.PG13) && user.getYears() < 14) {
-            return false;
-        }
-        return true;
     }
 }

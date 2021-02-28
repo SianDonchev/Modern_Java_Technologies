@@ -7,7 +7,7 @@ public class Account {
     private String username;
     private LocalDateTime bitrhdayDate;
 
-    Account(String username, LocalDateTime birthdayDate) {
+    public Account(String username, LocalDateTime birthdayDate) {
         this.username = username;
         this.bitrhdayDate = birthdayDate;
     }
