@@ -3,15 +3,11 @@ package bg.sofia.uni.fmi.mjt.netflix.platform;
 import bg.sofia.uni.fmi.mjt.netflix.account.Account;
 import bg.sofia.uni.fmi.mjt.netflix.content.PairStreamableViews;
 import bg.sofia.uni.fmi.mjt.netflix.content.Streamable;
-import bg.sofia.uni.fmi.mjt.netflix.content.StreamingContent;
 import bg.sofia.uni.fmi.mjt.netflix.content.enums.PgRating;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentNotFoundException;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.ContentUnavailableException;
 import bg.sofia.uni.fmi.mjt.netflix.exceptions.UserNotFoundException;
 
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.stream.Stream;
 
 public class Netflix implements StreamingService {
     private Account[] accounts;
@@ -49,7 +45,14 @@ public class Netflix implements StreamingService {
 
     @Override
     public Streamable mostViewed() {
-        return null;
+        Streamable mostViewdContent = null;
+        int mostViews = 0;
+        for(PairStreamableViews pairStreamableViews : streamableContentAndViews){
+            if(mostViews < pairStreamableViews.getViews()){
+                mostViewdContent = pairStreamableViews.getStreamable();
+            }
+        }
+        return mostViewdContent;
     }
 
     @Override
