@@ -1,4 +1,4 @@
 package bg.sofia.uni.fmi.mjt.smartcity.device;
 
-public class SmartTrafficLight {
+public class SmartTrafficLight extends PhysicalSmartDevice {
 }
