@@ -19,8 +19,11 @@ public class SmartCityHub {
      * @throws DeviceAlreadyRegisteredException in case the @device is already registered.
      */
     public void register(SmartDevice device) throws DeviceAlreadyRegisteredException {
+        if(device == null) {
+            throw new IllegalArgumentException();
+        }
         if (smartDevices.containsKey(device.getId())) {
-            throw new UnsupportedOperationException();
+            throw new DeviceAlreadyRegisteredException();
         }
         smartDevices.put(device.getId(), device);
     }
@@ -32,8 +35,11 @@ public class SmartCityHub {
      * @throws DeviceNotFoundException  in case the @device is not found.
      */
     public void unregister(SmartDevice device) throws DeviceNotFoundException {
+        if(device == null) {
+            throw new IllegalArgumentException();
+        }
         if (!smartDevices.containsKey(device.getId())) {
-            throw new UnsupportedOperationException();
+            throw new DeviceNotFoundException();
         }
         smartDevices.remove(device.getId());
     }
@@ -45,8 +51,11 @@ public class SmartCityHub {
      * @throws DeviceNotFoundException  in case device with ID @id is not found.
      */
     public SmartDevice getDeviceById(String id) throws DeviceNotFoundException {
+        if(id == null) {
+            throw new IllegalArgumentException();
+        }
         if (!smartDevices.containsKey(id)) {
-            throw new UnsupportedOperationException();
+            throw new DeviceNotFoundException();
         }
         return smartDevices.remove(id);
     }
@@ -57,6 +66,9 @@ public class SmartCityHub {
      * @throws IllegalArgumentException in case @type is null.
      */
     public int getDeviceQuantityPerType(DeviceType type) {
+        if(type == null) {
+            throw new IllegalArgumentException();
+        }
         int numberOfDevicesOfType = 0;
         for (Map.Entry<String, SmartDevice> smartDeviceEntry : smartDevices.entrySet()) {
          if(smartDeviceEntry.getValue().getType().equals(type)){
@@ -91,6 +103,9 @@ public class SmartCityHub {
      * @throws IllegalArgumentException in case @n is a negative number.
      */
     public Collection<SmartDevice> getFirstNDevicesByRegistration(int n) {
+        if(n < 0) {
+            throw new IllegalArgumentException();
+        }
         int i = 0;
         int until = n > smartDevices.size() ? smartDevices.size() : n;
         Collection<SmartDevice> firstNDevices = new ArrayList<>(n);
