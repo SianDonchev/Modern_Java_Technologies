@@ -11,46 +11,52 @@ abstract public class PhysicalSmartDevice implements SmartDevice {
     private LocalDateTime installationDateTime;
     private DeviceType type;
 
-    /**
-     * Returns the ID of the device.
-     */
+    public PhysicalSmartDevice(String name, double powerConsumption, LocalDateTime installationDateTime) {
+        this.name = name;
+        this.powerConsumption = powerConsumption;
+        this.installationDateTime = installationDateTime;
+    }
+
     @Override
     public String getId() {
         return ID;
     }
 
-    /**
-     * Returns the name of the device.
-     */
     @Override
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns the power consumption of the device.
-     * For example, a lamp may consume 1kW/hour.
-     */
     @Override
     public double getPowerConsumption() {
         return powerConsumption;
     }
 
-    /**
-     * Returns the date and time of device installation.
-     * This is a time in the past when the device was 'physically' installed.
-     * It is not related to the time when the device is registered in the Hub.
-     */
     @Override
     public LocalDateTime getInstallationDateTime() {
         return installationDateTime;
     }
 
-    /**
-     * Returns the type of the device.
-     */
     @Override
     public DeviceType getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof PhysicalSmartDevice)) {
+            return false;
+        }
+        PhysicalSmartDevice physicalSmartDevice = (PhysicalSmartDevice) obj;
+
+        return this.ID.equals(physicalSmartDevice.ID);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.ID.hashCode();
     }
 }
