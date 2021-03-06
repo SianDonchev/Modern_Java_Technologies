@@ -3,12 +3,10 @@ package bg.sofia.uni.fmi.mjt.smartcity.hub;
 import bg.sofia.uni.fmi.mjt.smartcity.device.SmartDevice;
 import bg.sofia.uni.fmi.mjt.smartcity.enums.DeviceType;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class SmartCityHub {
-    private LinkedHashMap<String,SmartDevice> smartDevices;
+    private LinkedHashMap<String, SmartDevice> smartDevices;
 
     public SmartCityHub() {
 
@@ -24,7 +22,7 @@ public class SmartCityHub {
         if (smartDevices.containsKey(device.getId())) {
             throw new UnsupportedOperationException();
         }
-        smartDevices.put(device.getId(),device);
+        smartDevices.put(device.getId(), device);
     }
 
     /**
@@ -59,7 +57,13 @@ public class SmartCityHub {
      * @throws IllegalArgumentException in case @type is null.
      */
     public int getDeviceQuantityPerType(DeviceType type) {
-        throw new UnsupportedOperationException();
+        int numberOfDevicesOfType = 0;
+        for (Map.Entry<String, SmartDevice> smartDeviceEntry : smartDevices.entrySet()) {
+         if(smartDeviceEntry.getValue().getType().equals(type)){
+             ++numberOfDevicesOfType;
+         }
+        }
+        return numberOfDevicesOfType;
     }
 
     /**
@@ -87,7 +91,17 @@ public class SmartCityHub {
      * @throws IllegalArgumentException in case @n is a negative number.
      */
     public Collection<SmartDevice> getFirstNDevicesByRegistration(int n) {
-        throw new UnsupportedOperationException();
+        int i = 0;
+        int until = n > smartDevices.size() ? smartDevices.size() : n;
+        Collection<SmartDevice> firstNDevices = new ArrayList<>(n);
+        for (Map.Entry<String, SmartDevice> smartDeviceEntry : smartDevices.entrySet()) {
+            if (i >= until) {
+                break;
+            }
+            firstNDevices.add(smartDeviceEntry.getValue());
+            ++i;
+        }
+        return firstNDevices;
     }
 }
 
