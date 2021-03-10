@@ -2,18 +2,17 @@ package bg.sofia.uni.fmi.mjt.smartcity.device;
 
 import bg.sofia.uni.fmi.mjt.smartcity.enums.DeviceType;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 abstract public class PhysicalSmartDevice implements SmartDevice {
     private String ID;
     private String name;
-    private double powerConsumption;
     private LocalDateTime installationDateTime;
     private DeviceType type;
 
     public PhysicalSmartDevice(String name, double powerConsumption, LocalDateTime installationDateTime) {
         this.name = name;
-        this.powerConsumption = powerConsumption;
         this.installationDateTime = installationDateTime;
     }
 
@@ -29,7 +28,7 @@ abstract public class PhysicalSmartDevice implements SmartDevice {
 
     @Override
     public double getPowerConsumption() {
-        return powerConsumption;
+        return Duration.between(LocalDateTime.now(), installationDateTime).toHours();
     }
 
     @Override
