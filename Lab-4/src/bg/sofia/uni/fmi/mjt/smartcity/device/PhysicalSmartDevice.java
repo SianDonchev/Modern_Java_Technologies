@@ -11,7 +11,7 @@ abstract public class PhysicalSmartDevice implements SmartDevice {
     private LocalDateTime installationDateTime;
     private DeviceType type;
 
-    public PhysicalSmartDevice(String name, double powerConsumption, LocalDateTime installationDateTime) {
+    public PhysicalSmartDevice(String name, LocalDateTime installationDateTime) {
         this.name = name;
         this.installationDateTime = installationDateTime;
     }
