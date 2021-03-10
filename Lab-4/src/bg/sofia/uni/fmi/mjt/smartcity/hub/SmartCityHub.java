@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.smartcity.hub;
 
 import bg.sofia.uni.fmi.mjt.smartcity.device.SmartDevice;
+import bg.sofia.uni.fmi.mjt.smartcity.device.SmartDeviceComparator;
 import bg.sofia.uni.fmi.mjt.smartcity.enums.DeviceType;
 
 import java.util.*;
@@ -91,7 +92,17 @@ public class SmartCityHub {
      * @throws IllegalArgumentException in case @n is a negative number.
      */
     public Collection<String> getTopNDevicesByPowerConsumption(int n) {
-        throw new UnsupportedOperationException();
+        if(n < 0){
+            throw new IllegalArgumentException();
+        }
+        Comparator smartDeviceComparator = new SmartDeviceComparator();
+        TreeSet<SmartDevice> topNDevices = new TreeSet<>(smartDeviceComparator);
+
+        for (Map.Entry<String, SmartDevice> smartDeviceEntry : smartDevices.entrySet()) {
+            topNDevices.add(smartDeviceEntry.getValue());
+        }
+        return convertToStringCollection(topNDevices);
+
     }
 
     /**
@@ -117,6 +128,14 @@ public class SmartCityHub {
             ++i;
         }
         return firstNDevices;
+    }
+
+    private Collection<String> convertToStringCollection(Collection<SmartDevice> smartDevices){
+        Collection<String> stringCollectionOfDevices = new ArrayList<String>(smartDevices.size());
+        for(SmartDevice smartDevice : smartDevices){
+            stringCollectionOfDevices.add(smartDevice.getId());
+        }
+        return stringCollectionOfDevices;
     }
 }
 
