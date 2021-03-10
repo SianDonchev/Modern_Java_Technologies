@@ -20,7 +20,7 @@ public class SmartCityHub {
             throw new IllegalArgumentException();
         }
         if (smartDevices.containsKey(device.getId())) {
-            throw new DeviceAlreadyRegisteredException();
+            throw new DeviceAlreadyRegisteredException("Device already registered");
         }
         smartDevices.put(device.getId(), device);
     }
@@ -36,7 +36,7 @@ public class SmartCityHub {
             throw new IllegalArgumentException();
         }
         if (!smartDevices.containsKey(device.getId())) {
-            throw new DeviceNotFoundException();
+            throw new DeviceNotFoundException("Device not found");
         }
         smartDevices.remove(device.getId());
     }
@@ -52,7 +52,7 @@ public class SmartCityHub {
             throw new IllegalArgumentException();
         }
         if (!smartDevices.containsKey(id)) {
-            throw new DeviceNotFoundException();
+            throw new DeviceNotFoundException("Device not found");
         }
         return smartDevices.remove(id);
     }
