@@ -9,10 +9,6 @@ import java.util.*;
 public class SmartCityHub {
     private LinkedHashMap<String, SmartDevice> smartDevices;
 
-    public SmartCityHub() {
-
-    }
-
     /**
      * Adds a @device to the SmartCityHub.
      *
@@ -96,7 +92,7 @@ public class SmartCityHub {
             throw new IllegalArgumentException();
         }
         Comparator smartDeviceComparator = new SmartDeviceComparator();
-        TreeSet<SmartDevice> topNDevices = new TreeSet<>(smartDeviceComparator);
+        Collection<SmartDevice> topNDevices = new TreeSet<>(smartDeviceComparator);
 
         for (Map.Entry<String, SmartDevice> smartDeviceEntry : smartDevices.entrySet()) {
             topNDevices.add(smartDeviceEntry.getValue());
