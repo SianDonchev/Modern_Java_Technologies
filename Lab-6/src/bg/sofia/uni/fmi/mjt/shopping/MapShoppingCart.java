@@ -1,51 +1,58 @@
 package bg.sofia.uni.fmi.mjt.shopping;
 
+
+import bg.sofia.uni.fmi.mjt.shopping.item.Item;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import bg.sofia.uni.fmi.mjt.shopping.item.Item;
-
 public class MapShoppingCart implements ShoppingCart {
 
-    public Map<Item, Integer> items; public ProductCatalog catalog;
+    public Map<Item, Integer> items;
+    public ProductCatalog catalog;
 
     public MapShoppingCart(ProductCatalog catalog) {
+        this.items = new HashMap<>();
         this.catalog = catalog;
     }
 
     public Collection<Item> getUniqueItems() {
-        Collection<Item> i = new ArrayList<>();
-        for(Map.Entry<Item, Integer> entry:items.entrySet()) {
-            i.add(entry.getKey());
+        Collection<Item> uniqueItems = new HashSet<>();
+        for (Map.Entry<Item, Integer> entry : items.entrySet()) {
+            uniqueItems.add(entry.getKey());
         }
-        return i;
+        return uniqueItems;
     }
 
     @Override
     public void addItem(Item item) {
-        if (item != null) {
-            if (items.containsKey(item)) {
-                Integer i = items.get(item);
-                if (i == null)
-                    items.put(item, 0);
-                else
-                    items.put(item, i++);
-            }
+        if (item == null) {
+            throw new IllegalArgumentException("Item to be added is null");
+        }
+        if (items.containsKey(item)) {
+            Integer i = items.get(item);
+            items.put(item, ++i);
+        } else {
+            items.put(item, 1);
         }
     }
 
     @Override
     public void removeItem(Item item) {
         if (item == null) {
-            throw new ItemNotFoundException("Item is not found");
+            throw new IllegalArgumentException("Item to be removed is null");
         }
 
         Integer occurrences = items.get(item);
-        if (--occurrences==0) {
+        if (occurrences == null || occurrences == 0) {
+            throw new ItemNotFoundException("Item is not found");
+        } else if (occurrences == 1) {
             items.remove(item);
         } else {
             items.put(item, occurrences - 1);
@@ -57,7 +64,7 @@ public class MapShoppingCart implements ShoppingCart {
         int total = 0;
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
             ProductInfo info = catalog.getProductInfo(entry.getKey().getId());
-            total += info.price() * entry.getValue();
+            total += (info.price() * entry.getValue());
         }
         return total;
     }
@@ -68,11 +75,12 @@ public class MapShoppingCart implements ShoppingCart {
         Collections.sort(sortedItems, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
-                ProductInfo info1 = catalog.getProductInfo(item1.getId());
-                ProductInfo info2 = catalog.getProductInfo(item2.getId());
-                if (info1.price() > info2.price()) {
+                Integer info1 = items.get(item1);
+                Integer info2 = items.get(item2);
+                ;
+                if (info1 > info2) {
                     return 1;
-                } else if (info1.price() < info2.price()) {
+                } else if (info1 < info2) {
                     return -1;
                 } else {
                     return 0;
