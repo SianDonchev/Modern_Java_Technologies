@@ -6,8 +6,8 @@ import bg.sofia.uni.fmi.mjt.shopping.item.Item;
 
 public class ListShoppingCart implements ShoppingCart {
 
-    ArrayList<Item> items;
-    ProductCatalog catalog;
+    private ArrayList<Item> items;
+    private ProductCatalog catalog;
 
     public ListShoppingCart(ProductCatalog catalog) {
         this.catalog = catalog;
@@ -49,7 +49,7 @@ public class ListShoppingCart implements ShoppingCart {
 
     @Override
     public Collection<Item> getSortedItems() {
-        Map<Item, Integer> itemToQuantity = create_map();
+        Map<Item, Integer> itemToQuantity = createMap();
         Map<Item, Integer> sortedItems = new TreeMap<>(new Comparator<Item>() {
             public int compare(Item item1, Item item2) {
                 return itemToQuantity.get(item1).compareTo(itemToQuantity.get(item2));
@@ -59,7 +59,7 @@ public class ListShoppingCart implements ShoppingCart {
         return sortedItems.keySet();
     }
 
-    private Map<Item, Integer> create_map() {
+    private Map<Item, Integer> createMap() {
         HashMap<Item, Integer> itemToQuantity = new HashMap<>();
         for (Item item : items) {
             boolean condition = itemToQuantity.containsKey(item);
