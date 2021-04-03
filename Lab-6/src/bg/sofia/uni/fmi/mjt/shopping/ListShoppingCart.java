@@ -16,17 +16,25 @@ public class ListShoppingCart implements ShoppingCart {
 
     @Override
     public Collection<Item> getUniqueItems() {
-        return new TreeSet<>(items);
+        return new HashSet<>(items);
     }
 
     @Override
     public void addItem(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item to be added is null");
+        }
         items.add(item);
     }
 
     @Override
     public void removeItem(Item item) {
-        items.remove(item);
+        if (item == null) {
+            throw new IllegalArgumentException("Item to be removed is null");
+        }
+        if(!items.remove(item)){
+            throw new ItemNotFoundException("Item is not found");
+        }
     }
 
     @Override
@@ -52,10 +60,10 @@ public class ListShoppingCart implements ShoppingCart {
     }
 
     private Map<Item, Integer> create_map() {
-        HashMap<Item, Integer> itemToQuantity = new HashMap<Item, Integer>();
+        HashMap<Item, Integer> itemToQuantity = new HashMap<>();
         for (Item item : items) {
-            boolean condition = !itemToQuantity.containsKey(item);
-            itemToQuantity.put(item, condition ? itemToQuantity.get(item) + 1: 1);
+            boolean condition = itemToQuantity.containsKey(item);
+            itemToQuantity.put(item, condition ? itemToQuantity.get(item) + 1 : 1);
         }
         return itemToQuantity;
     }

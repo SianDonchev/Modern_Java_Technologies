@@ -41,7 +41,7 @@ public class MapShoppingCart implements ShoppingCart {
     @Override
     public void removeItem(Item item) {
         if (item == null) {
-            throw new ItemNotFoundException();
+            throw new ItemNotFoundException("Item is not found");
         }
 
         Integer occurrences = items.get(item);
