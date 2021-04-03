@@ -3,27 +3,33 @@ package bg.sofia.uni.fmi.mjt.shopping;
 import bg.sofia.uni.fmi.mjt.shopping.item.Apple;
 import bg.sofia.uni.fmi.mjt.shopping.item.Chocolate;
 import bg.sofia.uni.fmi.mjt.shopping.item.Item;
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ListShoppingCartTest {
 
+    private ShoppingCart listShoppingCart;
+
     @Mock
     private ProductCatalog productCatalog;
 
-    @InjectMocks
-    private ListShoppingCart listShoppingCart;
+    @Before
+    public void setUp() {
+     listShoppingCart = new ListShoppingCart(productCatalog);
+    }
 
     @Test
     public void testGetSortedItems() {
@@ -102,7 +108,7 @@ public class ListShoppingCartTest {
         Item item = new Apple("1");
         listShoppingCart.addItem(item);
 
-        assertTrue(listShoppingCart.items.contains(item));
+        assertTrue(listShoppingCart.getUniqueItems().contains(item));
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -122,7 +128,7 @@ public class ListShoppingCartTest {
         listShoppingCart.addItem(item);
         listShoppingCart.removeItem(item);
 
-        assertFalse(listShoppingCart.items.contains(item));
+        assertFalse(listShoppingCart.getUniqueItems().contains(item));
     }
 
     @Test
