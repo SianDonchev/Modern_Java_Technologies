@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ListShoppingCart implements ShoppingCart {
-
     private ArrayList<Item> items;
     private ProductCatalog catalog;
 
