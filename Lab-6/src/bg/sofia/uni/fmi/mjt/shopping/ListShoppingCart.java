@@ -1,15 +1,21 @@
 package bg.sofia.uni.fmi.mjt.shopping;
 
-import java.util.*;
-
 import bg.sofia.uni.fmi.mjt.shopping.item.Item;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ListShoppingCart implements ShoppingCart {
 
     private ArrayList<Item> items;
     private ProductCatalog catalog;
 
-    public ListShoppingCart(ProductCatalog catalog) {
+    public ListShoppingCart(final ProductCatalog catalog) {
         this.catalog = catalog;
         this.items = new ArrayList<>();
     }
@@ -20,7 +26,7 @@ public class ListShoppingCart implements ShoppingCart {
     }
 
     @Override
-    public void addItem(Item item) {
+    public void addItem(final Item item) {
         if (item == null) {
             throw new IllegalArgumentException("Item to be added is null");
         }
@@ -28,11 +34,11 @@ public class ListShoppingCart implements ShoppingCart {
     }
 
     @Override
-    public void removeItem(Item item) {
+    public void removeItem(final Item item) {
         if (item == null) {
             throw new IllegalArgumentException("Item to be removed is null");
         }
-        if(!items.remove(item)){
+        if (!items.remove(item)) {
             throw new ItemNotFoundException("Item is not found");
         }
     }
@@ -51,7 +57,7 @@ public class ListShoppingCart implements ShoppingCart {
     public Collection<Item> getSortedItems() {
         Map<Item, Integer> itemToQuantity = createMap();
         Map<Item, Integer> sortedItems = new TreeMap<>(new Comparator<Item>() {
-            public int compare(Item item1, Item item2) {
+            public int compare(final Item item1, final Item item2) {
                 return itemToQuantity.get(item1).compareTo(itemToQuantity.get(item2));
             }
         });
