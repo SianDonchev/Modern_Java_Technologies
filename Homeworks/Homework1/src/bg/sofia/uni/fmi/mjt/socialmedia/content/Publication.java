@@ -8,7 +8,7 @@ import java.util.Collection;
 public abstract class Publication implements Content {
     private User ownerOfPublication;
     private int numberOfLikes;
-    private String Id;
+    private String id;
     private LocalDateTime publishedOn;
     private Collection<String> tags;
     private Collection<String> mentions;
@@ -25,6 +25,18 @@ public abstract class Publication implements Content {
         //TO DO
     }
 
+    public void addLike() {
+
+    }
+
+    public void addComment(String text) {
+
+    }
+
+    public boolean isExpired() {
+        return false;
+    }
+
     @Override
     public int getNumberOfLikes() {
         return numberOfLikes;
@@ -37,7 +49,7 @@ public abstract class Publication implements Content {
 
     @Override
     public String getId() {
-        return Id;
+        return id;
     }
 
     @Override

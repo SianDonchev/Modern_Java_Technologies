@@ -1,13 +1,12 @@
 package bg.sofia.uni.fmi.mjt.socialmedia.content;
 
-public class Like implements Activity {
-    @Override
-    public String getContent() {
-        return null;
+public class Like extends Operation {
+    public Like(String id) {
+        this.idOfPost = id;
     }
 
     @Override
-    public String getPostForActivity() {
+    public String getContent() {
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.socialmedia.content;
 
 public abstract class Operation implements Activity {
+    String idOfPost;
 
     @Override
     public String getContent() {
@@ -9,6 +10,6 @@ public abstract class Operation implements Activity {
 
     @Override
     public String getPostForActivity() {
-        return null;
+        return idOfPost;
     }
 }
