@@ -8,7 +8,7 @@ import java.util.*;
 public class User implements ActiveUser {
     private String name;
 
-    private Map<String, Pair<Publication, LocalDateTime>> publications;
+    private Map<String, Publication> publications;
     private Set<Pair<Activity, LocalDateTime>> activities;
 
     public User(String name) {
@@ -18,14 +18,14 @@ public class User implements ActiveUser {
     @Override
     public String publishPost(LocalDateTime publishedOn, String description) {
         Publication post = new Post(this, publishedOn);
-        publications.put(post.getId(), new Pair<>(post, publishedOn));
+        publications.put(post.getId(), post);
         return post.getId();
     }
 
     @Override
     public String publishStory(LocalDateTime publishedOn, String description) {
         Publication story = new Story(this, publishedOn);
-        publications.put(story.getId(), new Pair<>(story, publishedOn));
+        publications.put(story.getId(), story);
         return story.getId();
     }
 
@@ -42,14 +42,14 @@ public class User implements ActiveUser {
     }
 
     public Publication getPublication(String Id) {
-        return publications.get(Id).key();
+        return publications.get(Id);
     }
 
     public Collection<Publication> getPublications() {
         Collection<Publication> publications = new ArrayList(this.publications.size());
-        Set<Map.Entry<String, Pair<Publication, LocalDateTime>>> entriesOfPublications = this.publications.entrySet();
-        for (Map.Entry<String, Pair<Publication, LocalDateTime>> entry : entriesOfPublications) {
-            publications.add(entry.getValue().key());
+        Set<Map.Entry<String, Publication>> entriesOfPublications = this.publications.entrySet();
+        for (Map.Entry<String, Publication> entry : entriesOfPublications) {
+            publications.add(entry.getValue());
         }
         return publications;
     }
